@@ -68,10 +68,15 @@ var gameState = {
 
         // Check to see if gem has alt text
         if(!gemtxt) {
+
+          // WIP line, trying to get this to not be a hardcoded 
+          // if-else chain.
+          
+          // if($('.' + gameState.getClasses($(this)))
+
           // Case for gem1
           if($(this).attr("class").includes('gem1')) {
             $(this).attr('alt', gameState.values.gem1);
-            adder = $(this).attr('alt');
           }
           // Case for gem2
           if($(this).attr("class").includes('gem2')) {
