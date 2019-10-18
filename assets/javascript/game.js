@@ -16,6 +16,8 @@ var gameState = {
 
   // Game values, goal and game values
   values: {
+  
+    score: 0, // variable for adding to user score
     goal: 0,
     gem1: 1,
     gem2: 1,
@@ -51,7 +53,7 @@ var gameState = {
 
   // Updates game, WIP
   update() {
-
+  
   },
 
 };
