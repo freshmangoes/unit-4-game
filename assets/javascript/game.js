@@ -12,7 +12,12 @@ var gameState = {
   display: {
     score: $(".score"),
     wins: $(".wins"),
-    losses: $(".losses")
+    losses: $(".losses"),
+
+    gem1val: $('.gem1-val'),
+    gem2val: $('.gem2-val'),
+    gem3val: $('.gem3-val'),
+    gem4val: $('.gem4-val'),
   },
 
   // Game values, goal and game values
@@ -59,53 +64,38 @@ var gameState = {
   // Updates game, WIP
   update() {
     $(document).ready(function() {
-      console.log('Ready!');
+      // console.log('Ready!');
       gameState.gems.gem.click(function(){
         console.log('Gem clicked');
         var gemtxt = $(this).attr('alt');
-        console.log('Gem alt', gemtxt);
-        // $(this).attr('alt', 'clickes');
-
+        
         // Check to see if gem has alt text
         if(!gemtxt) {
-
-          // WIP line, trying to get this to not be a hardcoded 
-          // if-else chain.
+          // variables to clean up syntax
+          var currGem = gameState.getClasses($(this));
+          var currVal = '.' + currGem + '-val';
           
-          // if($('.' + gameState.getClasses($(this)))
+          // check to see if clicked gem has an attached value
+          if($(this).attr('class').includes(currGem)) {
+            // sets alt attr to the value of matching gem
+            $(this).attr('alt', gameState.values[currGem]);
+            // removes hidden attr
+            $(currVal).removeAttr('hidden');
+            // updates the text of matching gem value element
+            $(currVal).text(gameState.values[currGem]);
 
-          // Case for gem1
-          if($(this).attr("class").includes('gem1')) {
-            $(this).attr('alt', gameState.values.gem1);
           }
-          // Case for gem2
-          if($(this).attr("class").includes('gem2')) {
-            $(this).attr('alt', gameState.values.gem2);
-          }
-          // Case for gem3
-          if($(this).attr("class").includes('gem3')) {
-            $(this).attr('alt', gameState.values.gem3);
-          }
-          // Case for gem4
-          if($(this).attr("class").includes('gem4')) {
-            $(this).attr('alt', gameState.values.gem4);
-          }
-        } else {
-          gameState.addScore(gameState.getClasses($(this)));
         } 
-        console.log('Adder:', adder);
-        gameState.values.score += parseInt(adder);
+        gameState.addScore(gameState.getClasses($(this)));
         console.log('Score:', gameState.values.score);
+        $(gameState.display.score).text(gameState.values.score);
       });
 
     });
   },
 
-  // To add score, need:
-  // string for gem class
-  // gameState.values.gem#
+  // adds score using number attached to alt text of img
   addScore(gemNum) {
-    console.log('gemNum:', gemNum);
     var gemVal = $('.' + gemNum).attr('alt');
     this.values.score += parseInt(gemVal);
   },
@@ -115,7 +105,6 @@ var gameState = {
   // finding the gem# easy
   getClasses(clicked) {
     var classList = clicked.attr('class').split(' '); 
-    console.log('class list[end]:', classList[classList.length-1]);
     return classList[classList.length-1];
   }
 
