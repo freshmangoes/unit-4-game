@@ -1,3 +1,12 @@
+// TO DO LIST
+/*
+  In setHTML():
+    Make gem values only show when clicked on
+  In reset():
+    Add in goal reset functionality
+    Add in HTML reset functionality (update HTML)
+*/
+
 var gameState = {
   // jQuery selectors for gems
   gems: {
@@ -25,6 +34,8 @@ var gameState = {
   
     score: 0, // variable for adding to user score
     goal: 0,
+    wins: 0,
+    losses: 0,
     gem1: 1,
     gem2: 1,
     gem3: 1,
@@ -40,7 +51,11 @@ var gameState = {
   },
 
   setGemAlt(element) {
-
+    var currGem = element;
+    var currVal = '.' + element + '-val';
+    console.log('setGemAlt currGem', currGem);
+    console.log('setGemAlt currVal', currVal);
+    $('.' + currGem).attr('alt', this.values[currGem]);
   },
 
   // Sets goal
@@ -68,36 +83,70 @@ var gameState = {
       gameState.gems.gem.click(function(){
         console.log('Gem clicked');
         var gemtxt = $(this).attr('alt');
+        console.log(gemtxt);
         
         // Check to see if gem has alt text
         if(!gemtxt) {
           // variables to clean up syntax
+          
           var currGem = gameState.getClasses($(this));
           var currVal = '.' + currGem + '-val';
+          console.log($(this));
           
-          // check to see if clicked gem has an attached value
-          if($(this).attr('class').includes(currGem)) {
-            // sets alt attr to the value of matching gem
-            $(this).attr('alt', gameState.values[currGem]);
-            // removes hidden attr
-            $(currVal).removeAttr('hidden');
-            // updates the text of matching gem value element
-            $(currVal).text(gameState.values[currGem]);
-
-          }
+          gameState.setGemAlt(gameState.getClasses($(this)));
+          // updates the text of matching gem value element
+          // $(currVal).text(gameState.values[currGem]);
+          
         } 
+        gameState.setHTML();
         gameState.addScore(gameState.getClasses($(this)));
-        console.log('Score:', gameState.values.score);
-        $(gameState.display.score).text(gameState.values.score);
+        gameState.checkGoal(gameState.values.score);
       });
 
     });
+  },
+
+  // make it so only certain gems get updated when they are clicked
+  setHTML() {
+    $(this.display.gem1val).text(this.values.gem1);
+    $(this.display.gem1val).removeAttr('hidden');
+    $(this.display.gem2val).text(this.values.gem2);
+    $(this.display.gem2val).removeAttr('hidden');
+    $(this.display.gem3val).text(this.values.gem3);
+    $(this.display.gem3val).removeAttr('hidden');
+    $(this.display.gem4val).text(this.values.gem4);
+    $(this.display.gem4val).removeAttr('hidden');
+
+    $(this.display.score).text(this.values.score);
+    $(this.display.wins).text(this.values.wins);
+    $(this.display.losses).text(this.values.losses);
+
+
   },
 
   // adds score using number attached to alt text of img
   addScore(gemNum) {
     var gemVal = $('.' + gemNum).attr('alt');
     this.values.score += parseInt(gemVal);
+  },
+
+  checkGoal(score) {
+    if(score > this.values.goal) {
+      console.log('Oops');
+      this.values.losses++;
+      this.reset();
+    } else if(score == this.values.goal) {
+      this.values.wins++;
+      this.reset();
+    }
+  },
+
+  reset() {
+    this.values.score= 0;
+    this.setGemVals();
+
+    $(this.display.score).text(this.values.score);
+    
   },
 
   // gets list of classes for a clicked element
