@@ -79,27 +79,23 @@ var gameState = {
   // Updates game, WIP
   update() {
     $(document).ready(function() {
-      // console.log('Ready!');
+
       gameState.gems.gem.click(function(){
-        console.log('Gem clicked');
+        var currGem = gameState.getClasses($(this));
+        var currVal = '.' + currGem + '-val';
         var gemtxt = $(this).attr('alt');
-        console.log(gemtxt);
         
         // Check to see if gem has alt text
         if(!gemtxt) {
           // variables to clean up syntax
-          
-          var currGem = gameState.getClasses($(this));
-          var currVal = '.' + currGem + '-val';
-          console.log($(this));
-          
           gameState.setGemAlt(gameState.getClasses($(this)));
           // updates the text of matching gem value element
           // $(currVal).text(gameState.values[currGem]);
           
-        } 
-        gameState.setHTML();
+        }
+        gameState.updateGemVal(currVal, currGem);
         gameState.addScore(gameState.getClasses($(this)));
+        gameState.updateHTML();
         gameState.checkGoal(gameState.values.score);
       });
 
@@ -107,21 +103,19 @@ var gameState = {
   },
 
   // make it so only certain gems get updated when they are clicked
-  setHTML() {
-    $(this.display.gem1val).text(this.values.gem1);
-    $(this.display.gem1val).removeAttr('hidden');
-    $(this.display.gem2val).text(this.values.gem2);
-    $(this.display.gem2val).removeAttr('hidden');
-    $(this.display.gem3val).text(this.values.gem3);
-    $(this.display.gem3val).removeAttr('hidden');
-    $(this.display.gem4val).text(this.values.gem4);
-    $(this.display.gem4val).removeAttr('hidden');
+  updateGemVal(val, gem) {
+    $(val).text(this.values[gem]);
+    $(val).removeAttr('hidden');
+  },
 
+  updateHTML(){
     $(this.display.score).text(this.values.score);
     $(this.display.wins).text(this.values.wins);
     $(this.display.losses).text(this.values.losses);
+  },
 
-
+  hideValues() {
+    $(this.gameState.display.gem1val).attr('hidden');
   },
 
   // adds score using number attached to alt text of img
@@ -142,10 +136,10 @@ var gameState = {
   },
 
   reset() {
-    this.values.score= 0;
-    this.setGemVals();
-
+    this.values.score = 0;
+    this.init();
     $(this.display.score).text(this.values.score);
+    this.hideValues();
     
   },
 
