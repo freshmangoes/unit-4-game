@@ -1,12 +1,3 @@
-// TO DO LIST
-/*
-  In setHTML():
-    Make gem values only show when clicked on
-  In reset():
-    Add in goal reset functionality
-    Add in HTML reset functionality (update HTML)
-*/
-
 var gameState = {
   // jQuery selectors for gems
   gems: {
@@ -115,7 +106,10 @@ var gameState = {
   },
 
   hideValues() {
-    $(this.gameState.display.gem1val).attr('hidden');
+    $(this.display.gem1val).attr('hidden', '');
+    $(this.display.gem2val).attr('hidden', '');
+    $(this.display.gem3val).attr('hidden', '');
+    $(this.display.gem4val).attr('hidden', '');
   },
 
   // adds score using number attached to alt text of img
@@ -140,7 +134,6 @@ var gameState = {
     this.init();
     $(this.display.score).text(this.values.score);
     this.hideValues();
-    
   },
 
   // gets list of classes for a clicked element
