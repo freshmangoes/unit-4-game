@@ -43,9 +43,9 @@ var gameState = {
 
   setGemAlt(element) {
     var currGem = element;
-    var currVal = '.' + element + '-val';
-    console.log('setGemAlt currGem', currGem);
-    console.log('setGemAlt currVal', currVal);
+    // var currVal = '.' + element + '-val';
+    // console.log('setGemAlt currGem', currGem);
+    // console.log('setGemAlt currVal', currVal);
     $('.' + currGem).attr('alt', this.values[currGem]);
   },
 
