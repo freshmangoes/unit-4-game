@@ -74,16 +74,9 @@ var gameState = {
       gameState.gems.gem.click(function(){
         var currGem = gameState.getClasses($(this));
         var currVal = '.' + currGem + '-val';
-        var gemtxt = $(this).attr('alt');
-        
-        // Check to see if gem has alt text
-        if(!gemtxt) {
-          // variables to clean up syntax
-          gameState.setGemAlt(gameState.getClasses($(this)));
-          // updates the text of matching gem value element
-          // $(currVal).text(gameState.values[currGem]);
-          
-        }
+
+        gameState.setGemAlt(gameState.getClasses($(this)));
+
         gameState.updateGemVal(currVal, currGem);
         gameState.addScore(gameState.getClasses($(this)));
         gameState.updateHTML();
