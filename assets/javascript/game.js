@@ -77,7 +77,7 @@ var gameState = {
 
         gameState.setGemAlt(gameState.getClasses($(this)));
 
-        gameState.updateGemVal(currVal, currGem);
+        // gameState.updateGemVal(currVal, currGem);
         gameState.addScore(gameState.getClasses($(this)));
         gameState.updateHTML();
         gameState.checkGoal(gameState.values.score);
@@ -87,15 +87,16 @@ var gameState = {
   },
 
   // make it so only certain gems get updated when they are clicked
-  updateGemVal(val, gem) {
-    $(val).text(this.values[gem]);
-    $(val).removeAttr('hidden');
-  },
+  // updateGemVal(val, gem) {
+  //   $(val).text(this.values[gem]);
+  //   $(val).removeAttr('hidden');
+  // },
 
   updateHTML(){
     $(this.display.score).text(this.values.score);
     $(this.display.wins).text(this.values.wins);
     $(this.display.losses).text(this.values.losses);
+    $('.goal').text(this.values.goal);
   },
 
   hideValues() {
