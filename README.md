@@ -8,3 +8,5 @@ Made with vanilla HTML/CSS, Javascript, and jQuery.
 - Javascript for game logic
 - jQuery for dynamic DOM manipulation based on the gamestate
 
+# Instructions
+Clone the repo and open index.html with your web browser!
